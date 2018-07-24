@@ -23,34 +23,32 @@ The actual machine learning will be do in a program called [[https://www.cs.waik
 
 *** Install Weka and Import Data
 
-[[https://www.cs.waikato.ac.nz/ml/weka/downloading.html][Download]] a stable version of Weka for your operating system, and follow the installation instructions from the website. To import the CBC data that you have pre-processed, save that data as a comma-separated value (.csv) file. You can save as csv in Excel. Be sure the top of the spreadsheet contains only a single row of column labels, then only data beneath (see LINKexample). Now in the initial Weka window (Weka GUI Chooser), select ArffViewer the Tools menu. Open your csv in the ArffViewer. In the ArffViewer, you can modify the rows and columns of your data by right-clicking on them. The only important change to make is to identify an attribute as class- the column which describes the outcome you are trying to predict. Our classification attribute is subs-anemia. Right-click the column header for subs-anemia and select Attribute as Class. Now save as an .arff file type. Back at the 
+[[https://www.cs.waikato.ac.nz/ml/weka/downloading.html][Download]] a stable version of Weka for your operating system, and follow the installation instructions from the website. To import the CBC data that you have pre-processed, save that data as a comma-separated value (.csv) file. You can save as csv in Excel. Be sure the top of the spreadsheet contains only a single row of column labels, then only data beneath (see LINKexample). 
 
+Now in the initial Weka window (Weka GUI Chooser), select ArffViewer the Tools menu. Open your csv in the ArffViewer. In the ArffViewer, you can modify the rows and columns of your data by right-clicking on them. The only important change to make is to identify an attribute as class- the column which describes the outcome you are trying to predict. Our classification attribute is subs-anemia. Right-click the column header for subs-anemia and select Attribute as Class. Now save as an .arff file type. 
 
-  - Machine Learning
-    - Getting Started with Weka
-      - Install
-      - Import
-      - Analyze
-      - Classify
-- some CBC results on my desktop smb://surgpath.wupath.wucon.wustl.edu/Residents-Fellows/jszymanski/Desktop/3.2 to 3.12.csv
-- Ron picks prize
-- bin distributions to match
-- Aspects of exercise in scope
-  - Weka functionality
-  - Principles of data cleaning to ML
-    - Normalization
-  - Principles of supervised ML classification problem for
-    - Non-med example
-    - 
-- Out of scope
-  - Detail about CBCs
-  - Detail about dataset
-  - Detail about each ML algorithm
-- CBC w/ diff
-  - predict a low future count- i.e. platelet 
-- Good demo sites
-  - [[https://machinelearningmastery.com/load-csv-machine-learning-data-weka/][How To Load CSV Machine Learning Data in Weka]]
-  - [[https://machinelearningmastery.com/how-to-run-your-first-classifier-in-weka/][How to Run Your First Classifier in Weka]]
-  - [[http://machinelearningmastery.com/binary-classification-tutorial-weka/][How To Work Through a Binary Classification Project in Weka Step-By-Step]]
+*** Begin Classifying the Dataset
 
-Refer back to Dr. Jackups ML lecture for help. 
+Back at the initial Weka GUI Chooser window, select the Weka Explorer program and open the .arff file you just created. 
+
+- [ ] Preprocess tools
+
+Select the Classify tab. Notice the setting fro Classifier (ZeroR) and Cross-validation Folds (10). Recall the concept of cross-validation from Dr. Jackups machine learning lecture. Press start and look in the Classifier output window. Under  == Summary ==, you see about 1/2 of CBCs are correctly classified as preceding anemia or not (from the subs-anemia column) using the ZeroR algorithm. This is because ZeroR just picks the most prevalent category and assigns every instance to that category. This is your baseline, worst possible classifier.
+
+You objective is to improve this classifier to get the highest possible correct classification using 10-fold cross validation. You will need to draw on strategies from the machine learning and data pre-processing lectures. These strategies include: 
+
+- Select a better classification algorithm
+  - The Choose button under the Classifier heading will direct you to a wide selection of classifier methods. 
+  - [ ] Some common methods for this type of exercise include...
+- Optimize your classifier algorithm
+  - Each classifier algorithm has a set of pre-selected input parameters which are probably not optimized for this dataset. Select the text window to the right of the Choose button to change these parameters, then re-run to see if your classification gets better. 
+  - [ ] These are explained in LINK
+- Optimize your dataset
+  - Unless you direct Weka otherwise, it will use all the variables and all of the CBC values in your dataset, as is, for classification. You may improve your classification by changing the input data- using less variables, normalizing variables, re-scaling variables, or excluding incomplete values. 
+
+** Competition 
+
+Iterate through the above process as much as you like to improve your classification. 
+
+- [ ] Include resources
+
