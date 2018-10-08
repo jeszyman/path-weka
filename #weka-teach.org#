@@ -119,7 +119,7 @@ Also, if you haven't discovered as part of your pre-processing, Weka defaults th
 
 [[file:./tutorial-images/classify-type.png]]
 
-We'll go over a couple in class, but the specifics of each algorithm, its assumptions, settings, and output, are beyond the scope of this exercise. See the Resources and References section to learn more. 
+We'll go over a couple in class, but the specifics of each algorithm, its assumptions, settings, and output, are beyond the scope of this exercise. See the [[Resources and References]] section to learn more. 
 
 *** Cross Validation
 
