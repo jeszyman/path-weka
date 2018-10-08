@@ -40,7 +40,7 @@ Recall, this was several days of CBC with differential results from Cerner Mille
 4. Removed patient identifiers
 
 
-file:./tutorial-images/design.png
+[[file:./tutorial-images/design.png]]
 
 
 ** Pre-processing and Data Mining
@@ -69,7 +69,7 @@ Weka uses a specialized file format, .arff, which is just a .csv file with some 
 - Open Weka, you will see the Wek GUI Chooser window
 - Under the Tools menu at the top, choose ArffViewer: 
 
-./tutorial-images/weka-open.png
+[[./tutorial-images/weka-open.png]]
 
 
 - 
