@@ -67,7 +67,11 @@ Note: These results were selected so that the subs-anemia groups have comparable
 Weka uses a specialized file format, .arff, which is just a .csv file with some extra header material. Weka can convert .csv files to .arff in the ARFF Viewer tool. 
 
 - Open Weka, you will see the Wek GUI Chooser window
-- Under the Tools menu at the top, choose ArffViewer: file:./tutorial-images/weka-open.png
+- Under the Tools menu at the top, choose ArffViewer: 
+
+./tutorial-images/weka-open.png
+
+
 - 
 
 
