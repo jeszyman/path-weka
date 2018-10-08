@@ -2,6 +2,8 @@ IMAGES
 - study design
 - ML process
 
+OTHER ideas- normochromic only- WHO def, what about normocytic? 
+
 * Best Anemia Predictor Competition
 ** Introduction
 
@@ -14,7 +16,7 @@ If you have not already done so, download and install the Weka program:
 https://www.cs.waikato.ac.nz/ml/weka/downloading.html
 
 Get the stable version for your operating system including the Java VM. For example, if you are on Windows, then get the "self-extracting executable for 64-bit Windows that includes Oracle's 64-bit Java VM 1.8"
-
+(This one)
 [[file:./tutorial-images/windows-dl-ex.png]]
 
 Follow the install instructions in the downloaded file.
@@ -24,6 +26,8 @@ You do not need to install any additional packages, just the base Weka program i
 ** Data
 
 We will use the CBC data from last week's data mining and pre-processing lecture. __The .csv file was emailed to you (NEW-cbc.csv).__ All of these CBC results have normal hemoglobin and hematocrit, but half of the patients will be anemic on their next CBC. These subsequent CBCs are not included, but rather the patients who will become anemic are identified in the subsAnemia column. The other half of the included CBC results are from patients who were not anemic on their next CBC (subs-anemia = "No"). 
+
+[[file:./tutorial-images/design.png]]
 
 _Your job is to use the available CBC data to predict which patients will become anemic.__ 
 This is an example of supervised learning where we will present the computer with examples of our two outcomes (subsequently anemic versus subsequently not anemic) and ask the computer to learn rules or patterns which 
