@@ -39,7 +39,9 @@ Recall, this was several days of CBC with differential results from Cerner Mille
   - Control: Patient's next CBC was not anemic 
 4. Removed patient identifiers
 
+
 file:./tutorial-images/design.png
+
 
 ** Pre-processing and Data Mining
 
@@ -60,10 +62,14 @@ In machine learning, this is an example of a supervised learning classifier prob
 Note: These results were selected so that the subs-anemia groups have comparable distributions of hemoglobin and hematocrit (see distributions above, for method see cbc-preprocess.R).
 
 ** Supervised Machine Learning Classifier
+*** Import Data
 
-The actual machine learning will be done in a program called [[https://www.cs.waikato.ac.nz/ml/weka/][Weka]]. Weka is a powerful but easy to use machine learning platform with a graphical, point-and-click interface. 
+Weka uses a specialized file format, .arff, which is just a .csv file with some extra header material. Weka can convert .csv files to .arff in the ARFF Viewer tool. 
 
-*** Install Weka and Import Data
+- Open Weka, you will see the Wek GUI Chooser window
+- Under the Tools menu at the top, choose ArffViewer: file:./tutorial-images/weka-open.png
+- 
+
 
 [[https://www.cs.waikato.ac.nz/ml/weka/downloading.html][Download]] a stable version of Weka for your operating system, and follow the installation instructions from the website. To import the CBC data that you have pre-processed, save that data as a comma-separated value (.csv) file. You can save as csv in Excel. Be sure the top of the spreadsheet contains only a single row of column labels, then only data beneath (see LINKexample). 
 
