@@ -18,7 +18,13 @@ For example, if you are on Windows, then get the "self-extracting executable for
 
 - Follow the install instructions in the downloaded file.
 
-- You do not need to install any additional packages, just the base Weka program is enough for this exercise.  
+- Open Weka to ensure it runs, and go to the Package manager under Tools: 
+
+[[file:./tutorial-images/package.png]]
+
+- We don't need any additional packages, but we do need to refresh the repository cache. Click that button, and when the download is complete, you can close the package manager: 
+
+[[file:./tutorial-images/repo.png]]
 
 ** Data
 
@@ -50,9 +56,9 @@ In email, I have provided you our minimally processed CBC data both as a comma-s
 Data that has not been carefully pre-processed will produce meaningless results, even if the machine learning algorithm runs successfully. This is the GIGO principle- [[https://en.wikipedia.org/wiki/Garbage_in,_garbage_out][garbage in, garbage out]]. 
 
 ** _OBJECTIVE: Your job is to use the available CBC data to predict which patients will become anemic._
-In machine learning, this is an example of a supervised learning classifier problem. We will present the computer with examples of our two outcomes (subsequently anemic versus subsequently not anemic) and ask the computer to learn rules or patterns in the data that correlate with each group.  
+In machine learning, this is an example of a supervised learning classifier problem. We will present the computer with examples of our two known outcomes (subsequently anemic versus subsequently not anemic) and ask the computer to learn rules or patterns in the data that correlate with each group.  
 
-Note: These results were selected so that the subsAnemia groups have comparable distributions of hemoglobin and hematocrit (see distributions above, for method see [[file:./cbc-preprocess.R]]).
+Note: These results were selected so that the subsAnemia groups have comparable distributions of hemoglobin and hematocrit (see distributions above, for method see [[file:./CBC-preprocess.R]]
 
 ** Supervised Machine Learning Classifier
 *** Import Data
