@@ -1,33 +1,75 @@
 * Best Anemia Predictor Competition
 ** Introduction
 
-In this exercise, you will use the principles of data pre-processing, data mining, and machine learning to create a supervised machine learning classifier. The classifier will predict future anemia based on a patient's last available CBC. This is a competition, and the best performing classifiers will win prizes!
+In this exercise, you will use the principles of data pre-processing, data mining, and machine learning to solve a supervised machine learning classifier problem. The classifier will predict future anemia based on a patient's current CBC. This is a competition, and the best performing classifiers will win prizes!
 
-** TODO Learning Objectives
+** Setup
 
-SBP7: Informatics: Explains, discusses, classifies, and applies clinical informatics (AP/CP)
-Level 3: Applies informatics skills as needed in project management (data management, computational statistics)
+- If you have not already done so, download and install the Weka program: 
 
-- Apply principles from data pre-processing and data mining to 
-- Use supervised machine learning algorithms to optimize a classifier
- 
-** Dataset
+https://www.cs.waikato.ac.nz/ml/weka/downloading.html
 
-Data will be made available when the competition is released. 
+- Get the stable version for your operating system including the Java VM. 
 
-The dataset you will be working with is de-identified CBC and differential results from our LIS database. All of these CBC results have normal hemoglobin and hematocrit, but half of the patients will be anemic on their next CBC. The subsequent, anemic CBC is not shown, but these patients are identified in the subs-anemia column with the value "Yes". The other half of the included CBC results are from patients who were not anemic on their next CBC (subs-anemia = "No"). 
+For example, if you are on Windows, then get the "self-extracting executable for 64-bit Windows that includes Oracle's 64-bit Java VM 1.8":
 
-_Your job is to use the available CBC data to predict which patients will become anemic._ Note: these results were selected so that the subs-anemia groups have comparable distributions of hematocrit in the first result (i.e. hemoglobin or hematocrit on their own will not be good predictors of future anemia for this dataset). Check out the R script in this GitHub repository to see how these data were generated and de-identified.
+
+[[file:./tutorial-images/windows-dl-ex.png]]
+
+- Follow the install instructions in the downloaded file.
+
+- You do not need to install any additional packages, just the base Weka program is enough for this exercise.  
+
+** Data
+
+We will use the CBC data from last week's data mining and pre-processing lecture. _The .csv and .arff files were emailed to you (machine-cbc.csv, machine-cbc.arff)_. All of these CBC results have normal hemoglobin and hematocrit, but half of the patients will be anemic on their /next/ CBC. The subsAnemia column in the .csv file identifies which patients will be anemic on their next CBC.
+
+Recall, this was several days of CBC with differential results from Cerner Millennium that went through the following pre-preprocessing steps: 
+
+1. Long-to-wide format change for DTAs
+2. Subset to CBCs where patient was not currently anemic
+3. Subset to a case-control series with comparable distributions of hemoglobin and hematocrit: 
+  - Cases: Patient's next CBC was anemic
+  - Control: Patient's next CBC was not anemic 
+4. Removed patient identifiers
+
+
+[[file:./tutorial-images/design.png]]
+
 
 ** Pre-processing and Data Mining
 
-The first step will be data pre-processing and data mining to understand the dataset. You will need to make decisions about which data to include, exclude, and modify, before applying machine learning techniques. For example, some CBCs in the dataset do not have complete differential results. You will decide whether to keep or exclude this data from analysis (or possibly even impute the missing values). You will decide whether the scale of each column of data is appropriate or should be changed (e.g. normalized) before analysis. This work can be done in any program you choose, such as Excel. Refer back to the data pre-processing and data mining lecture for help. 
+The data in machine-cbc.csv could to be substantially more pre-processed before loading it into Weka. For example, AGE is listed as "## Years" (e.g. "45 Years" instead of just 45). Weka is going to interpret the AGE column as a nominal variable instead of a continuous variable. The "match" and "m" columns were created as part of the case-control partition. They have a 1:1 correlation with the subsAnemia column and, therefore, contain no information. Some machine learning algorithms are affected by these correlated variables. For example, they can mask interactions that would otherwise be discovered by a random forest classifier. Finally, there are useful features within our data which would improve our classifier, but which have not been calculated yet. For example, the difference between the test order time and specimen received time can vary dramatically. Perhaps nurses wait longer to draw blood from stable patients, and the order-to-receive interval correlates with less subsequent anemia because these patients are more stable. We can calculate the order-to-receive interval and use this as another variable in our machine learning.
+
+The pre-processing tasks for machine learning are generally the same as for other analysis, but with special emphasis on cleaning, formatting, and transformation. 
+- Removing the "m" and "match" variables is an example of cleaning. 
+- Changing AGE to just a number is an example of formatting. 
+- Calculating the order-to-receive interval is an example of transformation. (Specifically, this is feature engineering. Other types of transformation include scaling and aggregation.) 
+
+In email, I have provided you our minimally processed CBC data both as a comma-separated value file (.csv) and as a weka-specific format (.arff). The .arff is ready to use directly in Weka, but *you will not get the best classifier without some more pre-processing of the .csv.*
+
+*Data that has not been carefully pre-processed will produce meaningless results,* even if the machine learning algorithm runs successfully. This is the GIGO principle- [[https://en.wikipedia.org/wiki/Garbage_in,_garbage_out][garbage in, garbage out]]. 
+
+** _OBJECTIVE: Your job is to use the available CBC data to predict which patients will become anemic._
+In machine learning, this is an example of a supervised learning classifier problem. We will present the computer with examples of our two outcomes (subsequently anemic versus subsequently not anemic) and ask the computer to learn rules or patterns in the data that correlate with each group.  
+
+Note: These results were selected so that the subs-anemia groups have comparable distributions of hemoglobin and hematocrit (see distributions above, for method see [[file:./cbc-preprocess.R]]).
 
 ** Supervised Machine Learning Classifier
+*** Import Data
 
-The actual machine learning will be done in a program called [[https://www.cs.waikato.ac.nz/ml/weka/][Weka]]. Weka is a powerful but easy to use machine learning platform with a graphical, point-and-click interface. 
+Weka uses a specialized file format, .arff, which is just a .csv file with some extra header material. Weka can convert .csv files to .arff in the ARFF Viewer tool. 
 
-*** Install Weka and Import Data
+- Open Weka, you will see the Wek GUI Chooser window
+- Under the Tools menu at the top, choose ArffViewer: 
+
+[[./tutorial-images/weka-open.png]]
+
+
+- In the ARFF Viewer, open the .csv your would like to import:
+
+
+
 
 [[https://www.cs.waikato.ac.nz/ml/weka/downloading.html][Download]] a stable version of Weka for your operating system, and follow the installation instructions from the website. To import the CBC data that you have pre-processed, save that data as a comma-separated value (.csv) file. You can save as csv in Excel. Be sure the top of the spreadsheet contains only a single row of column labels, then only data beneath (see LINKexample). 
 
@@ -58,3 +100,14 @@ Iterate through the above process as much as you like to improve your classifica
 
 - [ ] Include resources
 
+** Resources and References
+- Weka Documentation
+  - [[https://waikato.github.io/weka-wiki/search.html?q=time][wiki]]
+
+
+** DEL 
+IMAGES
+- study design
+- ML process
+
+OTHER ideas- normochromic only- WHO def, what about normocytic? 

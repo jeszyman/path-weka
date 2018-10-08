@@ -36,7 +36,6 @@ Recall, this was several days of CBC with differential results from Cerner Mille
 
 [[file:./tutorial-images/design.png]]
 
-
 ** Pre-processing and Data Mining
 
 The data in machine-cbc.csv could to be substantially more pre-processed before loading it into Weka. For example, AGE is listed as "## Years" (e.g. "45 Years" instead of just 45). Weka is going to interpret the AGE column as a nominal variable instead of a continuous variable. The "match" and "m" columns were created as part of the case-control partition. They have a 1:1 correlation with the subsAnemia column and, therefore, contain no information. Some machine learning algorithms are affected by these correlated variables. For example, they can mask interactions that would otherwise be discovered by a random forest classifier. Finally, there are useful features within our data which would improve our classifier, but which have not been calculated yet. For example, the difference between the test order time and specimen received time can vary dramatically. Perhaps nurses wait longer to draw blood from stable patients, and the order-to-receive interval correlates with less subsequent anemia because these patients are more stable. We can calculate the order-to-receive interval and use this as another variable in our machine learning.
@@ -68,20 +67,59 @@ Weka uses a specialized file format, .arff, which is just a .csv file with some 
 
 - In the ARFF Viewer, open the .csv your would like to import:
 
+[[file:./tutorial-images/arff-viewer.png]]
 
+- And a window showing this data will appear: 
 
+[[file:./tutorial-images/arff-data.png]]
 
-[[https://www.cs.waikato.ac.nz/ml/weka/downloading.html][Download]] a stable version of Weka for your operating system, and follow the installation instructions from the website. To import the CBC data that you have pre-processed, save that data as a comma-separated value (.csv) file. You can save as csv in Excel. Be sure the top of the spreadsheet contains only a single row of column labels, then only data beneath (see LINKexample). 
+- *CRITICAL:* Before proceeding, you must tell Weka which variable it should use to classify data. For our data, that is the subsAnemia column. Right-click that column header and select "Set Attribute as Class": 
 
-Now in the initial Weka window (Weka GUI Chooser), select ArffViewer the Tools menu. Open your csv in the ArffViewer. In the ArffViewer, you can modify the rows and columns of your data by right-clicking on them. The only important change to make is to identify an attribute as class- the column which describes the outcome you are trying to predict. Our classification attribute is subs-anemia. Right-click the column header for subs-anemia and select Attribute as Class. Now save as an .arff file type. 
+[[file:./tutorial-images/att-as-class.png]]
+
+- The subsAnemia column header should now be bold and the column should move to the far right of the table: 
+
+[[file:./tutorial-images/subsAnemia-att.png]]
+
+- Now you can save the data as an .arff file. Just click File -> Save as, and add an arff extension: 
+
+[[file:./tutorial-images/save-arff.png]]
+
+*** Introduction to Classifier Algorithms
+
+- Now we're ready to try some machine learning! Go back to the Weka GUI Chooser and select the Explorer button: 
+
+[[file:./tutorial-images/open-arff.png]]
+
+- Open the .arff file you just made, then go to the Classify tab:
+
+[[file:./tutorial-images/classify-tab.png]]
+
+- Without adjusting any settings, just hit "Start". 
+
+- The default algorithm is ZeroR. Weka will run the ZeroR algorithm and output will appear in the Classifier output window:   
+
+[[file:./tutorial-images/classify-output.png]]
+
+- Scroll down to === Summary === where you will see about 1/2 of cases were classified correctly. That's because ZeroR is just picking the most common category (or in our case the first category) and assigning every instance to that category. So instances with subsAnemia = normal get classified as normal and those with subsAnemia = anemic ... also get classified as normal! We run the ZeroR algorithm as a baseline- any other algorithm should perform better than this. 
+
+- The "Choose" button in the classifier window allows you to select different machine learning algorithms. 
+
+[[file:./tutorial-images/classify-type.png]]
+
+We'll go over a couple in class, but the specifics of each algorithm, it's assumptions, settings, and output, are beyond the scope of this exercise. See the Resources and References section to learn more. 
+
+***  and Cross Validation
 
 *** Begin Classifying the Dataset
 
-Back at the initial Weka GUI Chooser window, select the Weka Explorer program and open the .arff file you just created. 
 
-- [ ] Preprocess tools
+** Competition 
 
-Select the Classify tab. Notice the setting for Classifier (ZeroR) and Cross-validation Folds (10). Recall the concept of cross-validation from Dr. Jackups machine learning lecture. Press start and look in the Classifier output window. Under  == Summary ==, you see about 1/2 of CBCs are correctly classified as preceding anemia or not (from the subs-anemia column) using the ZeroR algorithm. This is because ZeroR just picks the most prevalent category and assigns every instance to that category. This is your baseline, worst possible classifier.
+Iterate through the above process as much as you like to improve your classification. 
+
+- [ ] Include resources
+
 
 You objective is to improve this classifier to get the highest possible correct classification using 10-fold cross validation. You will need to draw on strategies from the machine learning and data pre-processing lectures. These strategies include: 
 
@@ -94,12 +132,8 @@ You objective is to improve this classifier to get the highest possible correct 
   - Each classifier algorithm has a set of pre-selected input parameters which are probably not optimized for this dataset. Select the text window to the right of the Choose button to change these parameters, then re-run to see if your classification gets better. 
   - [ ] These are explained in LINK
 
-** Competition 
-
-Iterate through the above process as much as you like to improve your classification. 
-
-- [ ] Include resources
-
+Keep in mind that each model is a unique problem, and there is no single "best" machine learning algorithm to classify instances in the model. This is a 
+representation of the [[https://en.wikipedia.org/wiki/No_free_lunch_theorem][no free lunch theorem]]    
 ** Resources and References
 - Weka Documentation
   - [[https://waikato.github.io/weka-wiki/search.html?q=time][wiki]]
