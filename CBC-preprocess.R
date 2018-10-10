@@ -4,10 +4,12 @@
 #   stringr
 #   reshape2
 #   e1071
+#   data.table
 
 library('stringr')
 library('reshape2')
 library('e1071')
+library('data.table')
 
 #  Import
 #   UNCOMMENT AND ENTER PARAMETERS BELOW: 
@@ -50,8 +52,8 @@ table(cbc$m)
 boxplot(cbc$Hct ~ cbc$m)
 
 # Deidentify
-#  Set seed
-set.seed(3)
+#  Set seed- replace below with a number:
+# set.seed(<ANY NUM>)
 #  Create randomized columns
 #   Person
 patientID=data.frame(mskPERSON_ID=sample(1:length(unique(cbc$PERSON_ID)),replace=F),PERSON_ID=unique(cbc$PERSON_ID))
